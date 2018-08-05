@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import ExecutionEnvironment from 'exenv'
 import TourPortal from './TourPortal'
+import './tour-portal.css'
 
 const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer
 const SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {}

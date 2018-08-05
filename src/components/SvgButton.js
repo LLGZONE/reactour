@@ -7,5 +7,7 @@ export default styled.button`
   border: 0;
   background: none;
   font-size: 0;
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  `
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  border: 1px solid #d7d7d7;
+  border-radius: 2px;
+`

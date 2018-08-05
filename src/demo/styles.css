@@ -21,6 +21,25 @@ body {
   color: #2d2323;
 }
 
-[data-tour-elem='controls'] {
-  justify-content: center;
+.tour-next-btn {
+  background: #ffd900;
+  border-radius: 2px;
+  border: 0;
+  font-family: SFUIText-Medium;
+  font-size: 13px;
+  color: #131422;
+  text-align: right;
+  line-height: 14px;
+  padding: 7px 16px;
+}
+
+.tour-close-btn {
+  border: 1px solid #d7d7d7;
+  border-radius: 2px;
+  font-family: SFUIText-Medium;
+  font-size: 13px;
+  color: #999999;
+  text-align: right;
+  line-height: 14px;
+  padding: 7px 16px;
 }

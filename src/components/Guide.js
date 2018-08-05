@@ -6,7 +6,7 @@ const Guide = styled.div`
   position: fixed;
   background-color: #fff;
   transition: transform 0.3s;
-  padding: 24px 30px;
+  padding: 24px;
   box-shadow: 0 0.5em 3em rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
@@ -15,7 +15,6 @@ const Guide = styled.div`
   max-width: 331px;
   min-width: 150px;
   outline: 0;
-  padding-right: 40px;
   border-radius: ${props => props.rounded}px;
 
   transform: ${props => {
@@ -38,6 +37,7 @@ const Guide = styled.div`
       top: targetTop,
       bottom: windowHeight - targetBottom,
     }
+    console.log(padding)
 
     const couldPositionAt = position => {
       return (

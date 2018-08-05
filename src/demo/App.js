@@ -66,6 +66,8 @@ class App extends Component {
           className="helper"
           rounded={5}
           accentColor={accentColor}
+          closeButtonClassName="tour-close-btn"
+          nextButtonClassName="tour-next-btn"
         />
       </div>
     )

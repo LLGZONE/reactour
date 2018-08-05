@@ -3,16 +3,7 @@ import PropTypes from 'prop-types'
 import cn from 'classnames'
 import scrollSmooth from 'scroll-smooth'
 import Scrollparent from 'scrollparent'
-import {
-  Arrow,
-  Close,
-  Guide,
-  Badge,
-  Controls,
-  Navigation,
-  Dot,
-  SvgMask,
-} from './components/index'
+import { Arrow, Guide, Badge, Controls, SvgMask } from './components/index'
 import * as hx from './helpers'
 
 class TourPortal extends Component {
@@ -26,11 +17,12 @@ class TourPortal extends Component {
     lastStepNextButton: PropTypes.node,
     maskClassName: PropTypes.string,
     maskSpace: PropTypes.number,
+    helperSpace: PropTypes.number,
     nextButton: PropTypes.node,
     onAfterOpen: PropTypes.func,
     onBeforeClose: PropTypes.func,
     onRequestClose: PropTypes.func,
-    prevButton: PropTypes.node,
+    closeButton: PropTypes.node,
     scrollDuration: PropTypes.number,
     scrollOffset: PropTypes.number,
     showButtons: PropTypes.bool,
@@ -63,6 +55,8 @@ class TourPortal extends Component {
     disableKeyboardNavigation: PropTypes.bool,
     rounded: PropTypes.number,
     accentColor: PropTypes.string,
+    nextButtonClassName: PropTypes.string,
+    closeButtonClassName: PropTypes.string,
   }
 
   static defaultProps = {
@@ -82,6 +76,7 @@ class TourPortal extends Component {
     disableInteraction: false,
     rounded: 0,
     accentColor: '#007aff',
+    helperSpace: 85,
   }
 
   constructor() {
@@ -377,21 +372,21 @@ class TourPortal extends Component {
       maskClassName,
       showButtons,
       showNavigation,
-      showNavigationNumber,
       showNumber,
       onRequestClose,
       maskSpace,
       lastStepNextButton,
       nextButton,
-      prevButton,
+      closeButton,
       badgeContent,
       highlightedMaskClassName,
       disableInteraction,
-      disableDotsNavigation,
       nextStep,
-      prevStep,
       rounded,
       accentColor,
+      nextButtonClassName,
+      closeButtonClassName,
+      helperSpace,
     } = this.props
 
     const {
@@ -454,7 +449,7 @@ class TourPortal extends Component {
             helperWidth={helperWidth}
             helperHeight={helperHeight}
             helperPosition={helperPosition}
-            padding={maskSpace}
+            padding={helperSpace}
             tabIndex={-1}
             current={current}
             style={steps[current].style ? steps[current].style : {}}
@@ -483,28 +478,10 @@ class TourPortal extends Component {
               <Controls data-tour-elem="controls">
                 {showButtons && (
                   <Arrow
-                    onClick={
-                      typeof prevStep === 'function' ? prevStep : this.prevStep
-                    }
-                    disabled={current === 0}
-                    label={prevButton ? prevButton : null}
+                    onClick={onRequestClose}
+                    label={closeButton ? closeButton : 'close'}
+                    className={closeButtonClassName}
                   />
-                )}
-
-                {showNavigation && (
-                  <Navigation data-tour-elem="navigation">
-                    {steps.map((s, i) => (
-                      <Dot
-                        key={`${s.selector ? s.selector : 'undef'}_${i}`}
-                        onClick={() => this.gotoStep(i)}
-                        current={current}
-                        index={i}
-                        disabled={current === i || disableDotsNavigation}
-                        showNumber={showNavigationNumber}
-                        data-tour-elem="dot"
-                      />
-                    ))}
-                  </Navigation>
                 )}
 
                 {showButtons && (
@@ -518,23 +495,22 @@ class TourPortal extends Component {
                           ? nextStep
                           : this.nextStep
                     }
+                    inverted
                     disabled={
                       !lastStepNextButton && current === steps.length - 1
                     }
-                    inverted
                     label={
                       lastStepNextButton && current === steps.length - 1
                         ? lastStepNextButton
                         : nextButton
                           ? nextButton
-                          : null
+                          : 'next'
                     }
+                    className={nextButtonClassName}
                   />
                 )}
               </Controls>
             )}
-
-            <Close onClick={onRequestClose} />
           </Guide>
         </div>
       )
