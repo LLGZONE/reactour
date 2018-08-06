@@ -3,13 +3,7 @@ import styled from 'styled-components'
 import SvgButton from './SvgButton'
 import PropTypes from 'prop-types'
 
-const Label = styled.span`
-  font-size: 12px;
-  line-height: 1;
-`
-
 function Arrow({ className, onClick, inverted, label, disabled }) {
-  console.log(className)
   return (
     <SvgButton
       className={className}
@@ -17,7 +11,7 @@ function Arrow({ className, onClick, inverted, label, disabled }) {
       data-tour-elem={`${inverted ? 'right' : 'left'}-arrow`}
       disabled={disabled}
     >
-      <Label>{label}</Label>
+      <span>{label}</span>
     </SvgButton>
   )
 }

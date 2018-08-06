@@ -29,6 +29,9 @@ const Guide = styled.div`
       helperHeight,
       helperPosition,
       padding,
+      maskSpace,
+      targetWidth,
+      targetHeight,
     } = props
 
     const available = {
@@ -37,14 +40,13 @@ const Guide = styled.div`
       top: targetTop,
       bottom: windowHeight - targetBottom,
     }
-    console.log(padding)
 
     const couldPositionAt = position => {
       return (
         available[position] >
         (hx.isHoriz(position)
-          ? helperWidth + padding * 2
-          : helperHeight + padding * 2)
+          ? helperWidth + maskSpace * 2
+          : helperHeight + maskSpace * 2)
       )
     }
 
@@ -60,22 +62,31 @@ const Guide = styled.div`
 
     const pos = helperPosition => {
       const hX = hx.isOutsideX(targetLeft + helperWidth, windowWidth)
-        ? hx.isOutsideX(targetRight + padding, windowWidth)
+        ? hx.isOutsideX(targetRight + maskSpace, windowWidth)
           ? targetRight - helperWidth
-          : targetRight - helperWidth + padding
-        : targetLeft - padding
-      const x = hX > padding ? hX : padding
+          : targetRight - helperWidth + maskSpace
+        : targetLeft - maskSpace
+      const x = hX > maskSpace ? hX : maskSpace
       const hY = hx.isOutsideY(targetTop + helperHeight, windowHeight)
-        ? hx.isOutsideY(targetBottom + padding, windowHeight)
+        ? hx.isOutsideY(targetBottom + maskSpace, windowHeight)
           ? targetBottom - helperHeight
-          : targetBottom - helperHeight + padding
-        : targetTop - padding
-      const y = hY > padding ? hY : padding
+          : targetBottom - helperHeight + maskSpace
+        : targetTop - maskSpace
+      const y = hY > maskSpace ? hY : maskSpace
       const coords = {
-        top: [x, targetTop - helperHeight - padding * 2],
-        right: [targetRight + padding * 2, y],
-        bottom: [x, targetBottom + padding * 2],
-        left: [targetLeft - helperWidth - padding * 2, y],
+        top: [
+          x - (helperWidth - targetWidth - maskSpace * 2) / 2,
+          targetTop - helperHeight - maskSpace - padding,
+        ],
+        right: [
+          targetRight + maskSpace + padding,
+          y - (helperHeight - targetHeight - maskSpace * 2) / 2,
+        ],
+        bottom: [x, targetBottom + maskSpace * 2],
+        left: [
+          targetLeft - helperWidth - maskSpace - padding,
+          y - (helperHeight - targetHeight - maskSpace * 2) / 2,
+        ],
         center: [
           windowWidth / 2 - helperWidth / 2,
           windowHeight / 2 - helperHeight / 2,

@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import cn from 'classnames'
 import scrollSmooth from 'scroll-smooth'
 import Scrollparent from 'scrollparent'
-import { Arrow, Guide, Badge, Controls, SvgMask } from './components/index'
+import { Arrow, Guide, Controls, SvgMask, Wire } from './components/index'
 import * as hx from './helpers'
 
 class TourPortal extends Component {
   static propTypes = {
-    badgeContent: PropTypes.func,
     highlightedMaskClassName: PropTypes.string,
     className: PropTypes.string,
     closeWithMask: PropTypes.bool,
@@ -372,13 +371,11 @@ class TourPortal extends Component {
       maskClassName,
       showButtons,
       showNavigation,
-      showNumber,
       onRequestClose,
       maskSpace,
       lastStepNextButton,
       nextButton,
       closeButton,
-      badgeContent,
       highlightedMaskClassName,
       disableInteraction,
       nextStep,
@@ -450,6 +447,7 @@ class TourPortal extends Component {
             helperHeight={helperHeight}
             helperPosition={helperPosition}
             padding={helperSpace}
+            maskSpace={maskSpace}
             tabIndex={-1}
             current={current}
             style={steps[current].style ? steps[current].style : {}}
@@ -459,6 +457,11 @@ class TourPortal extends Component {
             })}
             accentColor={accentColor}
           >
+            <Wire
+              helperHeight={helperHeight}
+              helperWidth={helperWidth}
+              pos={helperPosition}
+            />
             {steps[current] &&
               (typeof steps[current].content === 'function'
                 ? steps[current].content({
@@ -467,13 +470,6 @@ class TourPortal extends Component {
                     step: current + 1,
                   })
                 : steps[current].content)}
-            {showNumber && (
-              <Badge data-tour-elem="badge">
-                {typeof badgeContent === 'function'
-                  ? badgeContent(current + 1, steps.length)
-                  : current + 1}
-              </Badge>
-            )}
             {(showButtons || showNavigation) && (
               <Controls data-tour-elem="controls">
                 {showButtons && (
