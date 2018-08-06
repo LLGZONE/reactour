@@ -89,6 +89,7 @@ class TourPortal extends Component {
       h: 0,
       inDOM: false,
       observer: null,
+      helperOffset: 0,
     }
   }
 
@@ -108,9 +109,12 @@ class TourPortal extends Component {
       getCurrentStep(nextStep)
     }
 
-    return {
-      current: nextStep,
+    if (nextStep !== state.current) {
+      return {
+        current: nextStep,
+      }
     }
+    return null
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -134,7 +138,7 @@ class TourPortal extends Component {
       isOpen &&
       this.props.isOpen &&
       this.state.current !== this.props.goToStep &&
-      this.state.current !== this.state.current
+      this.state.current !== prevState.current
     ) {
       this.showStep()
     }
@@ -176,6 +180,26 @@ class TourPortal extends Component {
     const stepCallback = o => {
       if (step.action && typeof step.action === 'function') {
         step.action(o)
+      }
+
+      if (step.helperOffset) {
+        this.setState(prevState => {
+          const target = {
+            w: prevState.width,
+            h: prevState.height,
+          }
+          const helper = {
+            w: prevState.helperWidth,
+            h: prevState.helperHeight,
+          }
+          return {
+            helperOffset: step.helperOffset(
+              target,
+              helper,
+              this.props.maskSpace
+            ),
+          }
+        })
       }
     }
 
@@ -402,6 +426,7 @@ class TourPortal extends Component {
       helperWidth,
       helperHeight,
       helperPosition,
+      helperOffset,
     } = this.state
 
     if (isOpen) {
@@ -457,6 +482,7 @@ class TourPortal extends Component {
               [CN.helper.isOpen]: isOpen,
             })}
             accentColor={accentColor}
+            helperOffset={helperOffset}
           >
             <Wire
               helperHeight={helperHeight}

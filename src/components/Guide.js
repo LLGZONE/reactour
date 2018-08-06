@@ -32,6 +32,7 @@ const Guide = styled.div`
       maskSpace,
       targetWidth,
       targetHeight,
+      helperOffset,
     } = props
 
     const available = {
@@ -75,20 +76,20 @@ const Guide = styled.div`
       const y = hY > maskSpace ? hY : maskSpace
       const coords = {
         top: [
-          x - (helperWidth - targetWidth - maskSpace * 2) / 2,
+          x - (helperWidth - targetWidth - maskSpace * 2) / 2 + helperOffset,
           targetTop - helperHeight - maskSpace - padding,
         ],
         right: [
           targetRight + maskSpace + padding,
-          y - (helperHeight - targetHeight - maskSpace * 2) / 2,
+          y - (helperHeight - targetHeight - maskSpace * 2) / 2 + helperOffset,
         ],
         bottom: [
-          x - (helperWidth - targetWidth - maskSpace * 2) / 2,
+          x - (helperWidth - targetWidth - maskSpace * 2) / 2 + helperOffset,
           targetBottom + maskSpace + padding,
         ],
         left: [
           targetLeft - helperWidth - maskSpace - padding,
-          y - (helperHeight - targetHeight - maskSpace * 2) / 2,
+          y - (helperHeight - targetHeight - maskSpace * 2) / 2 + helperOffset,
         ],
         center: [
           windowWidth / 2 - helperWidth / 2,

@@ -85,6 +85,9 @@ const tourConfig = [
     selector: '[data-tut="reactour__logo"]',
     content: 'And this is our cool bus...',
     position: 'bottom',
+    helperOffset(t, h, s) {
+      return (t.w - h.w) / 2 + s
+    },
   },
   {
     selector: '[data-tut="reactour__copy"]',
