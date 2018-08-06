@@ -84,11 +84,13 @@ const tourConfig = [
   {
     selector: '[data-tut="reactour__logo"]',
     content: 'And this is our cool bus...',
+    position: 'bottom',
   },
   {
     selector: '[data-tut="reactour__copy"]',
     content: `Keep in mind that you could try and test everything during the Tour.
       For example, try selecting the highlighted text…`,
+    position: 'top',
   },
   {
     selector: '[data-tut="reactour__style"]',
@@ -121,6 +123,7 @@ const tourConfig = [
       backgroundColor: 'black',
       color: 'white',
     },
+    position: 'right',
   },
   {
     selector: '[data-tut="reactour__goTo"]',

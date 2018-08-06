@@ -82,7 +82,10 @@ const Guide = styled.div`
           targetRight + maskSpace + padding,
           y - (helperHeight - targetHeight - maskSpace * 2) / 2,
         ],
-        bottom: [x, targetBottom + maskSpace * 2],
+        bottom: [
+          x - (helperWidth - targetWidth - maskSpace * 2) / 2,
+          targetBottom + maskSpace + padding,
+        ],
         left: [
           targetLeft - helperWidth - maskSpace - padding,
           y - (helperHeight - targetHeight - maskSpace * 2) / 2,

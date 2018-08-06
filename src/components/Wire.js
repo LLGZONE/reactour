@@ -6,7 +6,7 @@ const outBorder = 1
 const line = 50
 
 const Wire = styled.div`
-  position: relative;
+  position: absolute;
   background-color: white;
   border-radius: 50%;
   width: ${innerCircleWidth}px;

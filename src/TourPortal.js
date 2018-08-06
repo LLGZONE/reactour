@@ -25,8 +25,6 @@ class TourPortal extends Component {
     scrollDuration: PropTypes.number,
     scrollOffset: PropTypes.number,
     showButtons: PropTypes.bool,
-    showNavigation: PropTypes.bool,
-    showNavigationNumber: PropTypes.bool,
     showNumber: PropTypes.bool,
     startAt: PropTypes.number,
     goToStep: PropTypes.number,
@@ -50,12 +48,11 @@ class TourPortal extends Component {
     update: PropTypes.string,
     updateDelay: PropTypes.number,
     disableInteraction: PropTypes.bool,
-    disableDotsNavigation: PropTypes.bool,
-    disableKeyboardNavigation: PropTypes.bool,
     rounded: PropTypes.number,
     accentColor: PropTypes.string,
     nextButtonClassName: PropTypes.string,
     closeButtonClassName: PropTypes.string,
+    helperOffset: PropTypes.number,
   }
 
   static defaultProps = {
@@ -65,8 +62,6 @@ class TourPortal extends Component {
     onBeforeClose: () => {
       document.body.style.overflowY = 'auto'
     },
-    showNavigation: true,
-    showNavigationNumber: true,
     showButtons: true,
     showNumber: true,
     scrollDuration: 1,
@@ -76,6 +71,7 @@ class TourPortal extends Component {
     rounded: 0,
     accentColor: '#007aff',
     helperSpace: 85,
+    helperOffset: 0,
   }
 
   constructor() {
@@ -335,17 +331,8 @@ class TourPortal extends Component {
   }
 
   keyDownHandler = e => {
-    const {
-      onRequestClose,
-      nextStep,
-      prevStep,
-      disableKeyboardNavigation,
-    } = this.props
+    const { onRequestClose, nextStep, prevStep } = this.props
     e.stopPropagation()
-
-    if (disableKeyboardNavigation) {
-      return
-    }
 
     if (e.keyCode === 27) {
       // esc
@@ -370,7 +357,6 @@ class TourPortal extends Component {
       steps,
       maskClassName,
       showButtons,
-      showNavigation,
       onRequestClose,
       maskSpace,
       lastStepNextButton,
@@ -384,6 +370,7 @@ class TourPortal extends Component {
       nextButtonClassName,
       closeButtonClassName,
       helperSpace,
+      helperOffset,
     } = this.props
 
     const {
@@ -456,6 +443,7 @@ class TourPortal extends Component {
               [CN.helper.isOpen]: isOpen,
             })}
             accentColor={accentColor}
+            helperOffset={helperOffset}
           >
             <Wire
               helperHeight={helperHeight}
@@ -470,7 +458,7 @@ class TourPortal extends Component {
                     step: current + 1,
                   })
                 : steps[current].content)}
-            {(showButtons || showNavigation) && (
+            {showButtons && (
               <Controls data-tour-elem="controls">
                 {showButtons && (
                   <Arrow
