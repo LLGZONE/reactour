@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Demo from './Demo'
 import Tour from '../index'
+import { createGuide } from '../createGuide'
 import Text from './Text'
 import Glitch from './Glitch'
 import Tooltip from './Tooltip'
@@ -77,9 +78,15 @@ class App extends Component {
 const tourConfig = [
   {
     selector: '[data-tut="reactour__iso"]',
-    content:
-      "Ok, let's start with the name of the Tour that is about to begin.",
+    content: (
+      <div>
+        "Ok, let's start with the name of the Tour that is about to begin."
+      </div>
+    ),
     position: 'left',
+    action: () => {
+      console.log('llg')
+    },
   },
   {
     selector: '[data-tut="reactour__logo"]',
@@ -156,6 +163,7 @@ const tourConfig = [
         </div>
       )
     },
+    position: 'right',
   },
   {
     selector: '[data-tut="reactour__position"]',

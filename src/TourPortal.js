@@ -200,6 +200,8 @@ class TourPortal extends Component {
             ),
           }
         })
+      } else {
+        this.setState({ helperOffset: 0 })
       }
     }
 
@@ -382,11 +384,6 @@ class TourPortal extends Component {
       // right
       e.preventDefault()
       typeof nextStep === 'function' ? nextStep() : this.nextStep()
-    }
-    if (e.keyCode === 37) {
-      // left
-      e.preventDefault()
-      typeof prevStep === 'function' ? prevStep() : this.prevStep()
     }
   }
 

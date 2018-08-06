@@ -5,7 +5,6 @@ import ExecutionEnvironment from 'exenv'
 import TourPortal from './TourPortal'
 import './tour-portal.css'
 
-const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer
 const SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {}
 
 function getParentElement(parentSelector) {
@@ -31,12 +30,15 @@ class Tour extends Component {
       return document.body
     },
   }
-
-  componentDidMount() {
+  constructor(props) {
+    super(props)
     this.node = document.createElement('div')
     this.node.className = this.props.portalClassName
     const parent = getParentElement(this.props.parentSelector)
     parent.appendChild(this.node)
+  }
+
+  componentDidMount() {
     this.renderPortal(this.props)
   }
 
@@ -62,23 +64,16 @@ class Tour extends Component {
     } else {
       document.body.classList.remove('reactour__body')
     }
-
-    this.portal = renderSubtreeIntoContainer(
-      this,
-      <TourPortal {...props} />,
-      this.node
-    )
   }
 
   removePortal() {
-    ReactDOM.unmountComponentAtNode(this.node)
     const parent = getParentElement(this.props.parentSelector)
     parent.removeChild(this.node)
     document.body.classList.remove('reactour__body')
   }
 
   render() {
-    return null
+    return ReactDOM.createPortal(<TourPortal {...this.props} />, this.node)
   }
 }
 

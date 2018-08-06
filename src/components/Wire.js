@@ -41,7 +41,6 @@ const Wire = styled.div`
     }
   }};
   left: ${props => {
-    console.log(props.helperWidth)
     switch (props.pos) {
       case 'top':
       case 'bottom':
