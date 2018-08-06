@@ -40,16 +40,16 @@ class Tour extends Component {
     this.renderPortal(this.props)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const currentParent = getParentElement(this.props.parentSelector)
-    const newParent = getParentElement(nextProps.parentSelector)
+  componentDidUpdate(prevProps) {
+    const currentParent = getParentElement(prevProps.parentSelector)
+    const newParent = getParentElement(this.props.parentSelector)
 
     if (newParent !== currentParent) {
       currentParent.removeChild(this.node)
       newParent.appendChild(this.node)
     }
 
-    this.renderPortal(nextProps)
+    this.renderPortal(this.props)
   }
 
   componentWillUnmount() {

@@ -99,17 +99,31 @@ class TourPortal extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { isOpen, update, updateDelay } = this.props
+  static getDerivedStateFromProps(props, state) {
+    const { steps, getCurrentStep } = props
+    const n = props.goToStep
+    const nextStep = steps[n] ? n : state.current
 
-    if (!isOpen && nextProps.isOpen) {
-      this.open(nextProps.startAt)
-    } else if (isOpen && !nextProps.isOpen) {
+    if (typeof getCurrentStep === 'function') {
+      getCurrentStep(nextStep)
+    }
+
+    return {
+      current: nextStep,
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { isOpen, update, updateDelay } = prevProps
+
+    if (!isOpen && this.props.isOpen) {
+      this.open(this.props.startAt)
+    } else if (isOpen && !this.props.isOpen) {
       this.close()
     }
 
-    if (isOpen && update !== nextProps.update) {
-      if (nextProps.steps[this.state.current]) {
+    if (isOpen && update !== this.props.update) {
+      if (this.props.steps[prevState.current]) {
         setTimeout(this.showStep, updateDelay)
       } else {
         this.props.onRequestClose()
@@ -118,10 +132,11 @@ class TourPortal extends Component {
 
     if (
       isOpen &&
-      nextProps.isOpen &&
-      this.state.current !== nextProps.goToStep
+      this.props.isOpen &&
+      this.state.current !== this.props.goToStep &&
+      this.state.current !== this.state.current
     ) {
-      this.gotoStep(nextProps.goToStep)
+      this.showStep()
     }
   }
 
@@ -370,7 +385,6 @@ class TourPortal extends Component {
       nextButtonClassName,
       closeButtonClassName,
       helperSpace,
-      helperOffset,
     } = this.props
 
     const {
@@ -443,7 +457,6 @@ class TourPortal extends Component {
               [CN.helper.isOpen]: isOpen,
             })}
             accentColor={accentColor}
-            helperOffset={helperOffset}
           >
             <Wire
               helperHeight={helperHeight}
